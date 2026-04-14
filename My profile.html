@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile</title>
+  <style>
+    :root {
+      --bg-color: #fff0f5;
+      --primary: #ffd6e0;
+      --secondary: #ffe4ec;
+      --text: #555;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background: var(--bg-color);
+      color: var(--text);
+      transition: background 0.5s;
+      background-image: linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px),
+                        linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    header {
+      background: var(--primary);
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #ff6b9a;
+    }
+
+    section {
+      padding: 40px;
+      display: none;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    .home {
+      text-align: center;
+    }
+
+    .avatar {
+      width: 200px;
+      height: 250px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-top: 20px;
+      border: 3px solid #ffd6e0;
+      transition: transform 0.3s;
+    }
+
+    .avatar:hover {
+      transform: scale(1.05);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background: var(--secondary);
+      border: none;
+      cursor: pointer;
+      border-radius: 20px;
+    }
+
+    .contact input, .contact textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    /* Skills */
+    .bar {
+      width: 100%;
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .fill {
+      height: 10px;
+      background: pink;
+    }
+
+    /* Education */
+    .edu {
+      background: white;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      border-left: 5px solid pink;
+      position: relative;
+      padding-left: 25px;
+    }
+
+    .edu::before {
+      content: "🎓";
+      position: absolute;
+      left: -10px;
+      top: 15px;
+    }
+
+    /* About cards */
+    .about-extra {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: var(--primary);
+    }
+  @keyframes floatUp {
+  0%   { bottom: -30px; opacity: 0; transform: translateX(0) rotate(0deg); }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.8; }
+  100% { bottom: 100vh; opacity: 0; transform: translateX(30px) rotate(20deg); }
+}
+</style>
+</head>
+<!-- Tim bay -->
+<div id="hearts-container" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden;"></div>
+
+<script>
+  function createHeart() {
+    const container = document.getElementById('hearts-container');
+    const heart = document.createElement('div');
+   const emojis = ['🩷', '💖', '✨', '🌸', '💕', '🌷', '🎀', '💗', '🌺', '💫', '🍬', '🧁', '💝', '🌼', '🎵', '🍭', '💐'];
+    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    heart.style.cssText = `
+      position: absolute;
+      font-size: ${Math.random() * 16 + 10}px;
+      left: ${Math.random() * 100}%;
+      bottom: -30px;
+      opacity: 0;
+      animation: floatUp ${Math.random() * 4 + 4}s ease-in forwards;
+      pointer-events: none;
+    `;
+    container.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+  }
+
+  setInterval(createHeart, 500);
+</script>
+<body>
+
+<header>
+  <h2>My Profile</h2>
+  <nav>
+    <a href="#" onclick="showPage('home')">Trang chủ</a>
+    <a href="#" onclick="showPage('about')">Giới thiệu</a>
+    <a href="#" onclick="showPage('skills')">Kỹ năng</a>
+    <a href="#" onclick="showPage('education')">Học vấn</a>
+    <a href="#" onclick="showPage('contact')">Liên hệ</a>
+  </nav>
+</header>
+
+<section id="home" class="active home">
+  <h1>Xin chào, mình là Ngọc Ánh!</h1>
+  <p>Chào mừng đến với website cá nhân của mình 💖</p>
+  <img src="images/anh ao dai.jpg" class="avatar">
+<!-- Mạng xã hội -->
+<div style="display:flex; justify-content:center; gap:12px; margin-top:16px;">
+  <a href="https://www.facebook.com/ngcanhs81/?locale=vi_VN" target="_blank"
+    style="display:flex; align-items:center; gap:8px; background:white; border:1px solid #ffd6e0; border-radius:99px; padding:8px 18px; text-decoration:none; color:#555; font-size:14px; box-shadow:0 2px 8px rgba(255,182,193,0.3); transition:transform 0.2s;"
+    onmouseover="this.style.transform='translateY(-3px)'"
+    onmouseout="this.style.transform='translateY(0)'">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="20" height="20">
+    Facebook
+  </a>
+  <a href="https://www.instagram.com/pngc.anhs/" target="_blank"
+  style="display:flex; align-items:center; gap:8px; background:white; border:1px solid #ffd6e0; border-radius:99px; padding:8px 18px; text-decoration:none; color:#555; font-size:14px; box-shadow:0 2px 8px rgba(255,182,193,0.3); transition:transform 0.2s;"
+  onmouseover="this.style.transform='translateY(-3px)'"
+  onmouseout="this.style.transform='translateY(0)'">
+  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="20" height="20">
+  Instagram
+</a>
+<a href="https://www.tiktok.com/@phngcanhs" target="_blank"
+  style="display:flex; align-items:center; gap:8px; background:white; border:1px solid #ffd6e0; border-radius:99px; padding:8px 18px; text-decoration:none; color:#555; font-size:14px; box-shadow:0 2px 8px rgba(255,182,193,0.3); transition:transform 0.2s;"
+  onmouseover="this.style.transform='translateY(-3px)'"
+  onmouseout="this.style.transform='translateY(0)'">
+  <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" width="20" height="20">
+  TikTok
+</a>
+</div>
+  <p style="font-size:20px;">🩷🧁✨</p>
+  <br><br>
+  <button class="btn" onclick="changeBg()">Đổi background</button>
+</section>
+
+<section id="about">
+  <div style="display:flex; gap:40px; align-items:flex-start;">
+    
+    <!-- Cột trái: thông tin -->
+     <div style="padding-left:220px;">
+      <h1>Giới thiệu</h1>
+      <p>Họ và tên: Phạm Thị Ngọc Ánh</p>
+      <p>Ngày sinh: 08/01/2005</p>
+      <p>Quê quán: Hải Dương</p>
+      <p>Trường đang học: Học viện Tài chính</p>
+      <p>Gmail: anhptn0801@gmail.com</p>
+    </div>
+
+    <!-- Cột phải: ảnh -->
+    <div style="flex:1; display:flex; justify-content:center; align-items:center;">
+      <img src="images/anh gioi thieu.jpg" 
+  style="width:420px; height:250px; object-fit:cover; border-radius:15px; border:3px solid #ffd6e0; box-shadow:0 4px 15px rgba(255,182,193,0.5);">
+    </div>
+
+  </div>
+
+  <div class="about-extra">
+    <div class="card">
+      <h3>🎯 Mục tiêu</h3>
+      <ul>
+      <li>Trở thành lập trình viên chuyên nghiệp </li>
+      <li>Đưa bố mẹ đi du lịch vòng quanh thế giới </li>
+    </div>
+
+    <div class="card">
+      <h3>💡 Điểm mạnh</h3>
+      <ul>
+        <li>Chăm chỉ và kiên trì</li>
+        <li>Thích học cái mới</li>
+        <li>Biết lắng nghe góp ý và sửa đổi</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🎵 Sở thích</h3>
+      <ul>
+        <li>Nghe nhạc</li>
+        <li>Đi du lịch cùng gia đình, bạn bè</li>
+        <li>Thích mọi thứ màu hồng</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>✨ Fun fact</h3>
+      <p>Thích làm mọi thứ trông thật đẹp, kể cả code</p>
+    </div>
+  </div>
+</section>
+<section id="skills">
+  <h1>Kỹ năng</h1>
+
+  <!-- Công cụ & Phần mềm -->
+  <h3 style="color:#ff6b9a; font-size:15px; letter-spacing:0.08em; margin-bottom:12px;">CÔNG CỤ & PHẦN MỀM</h3>
+  <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;">
+    <span style="background:#fff0f5; color:#cc4477; padding:6px 16px; border-radius:99px; font-size:15px; border:1px solid #ffb3cc;">VS Code</span>
+    <span style="background:#fff0f5; color:#cc4477; padding:6px 16px; border-radius:99px; font-size:15px; border:1px solid #ffb3cc;">Python</span>
+    <span style="background:#fff0f5; color:#cc4477; padding:6px 16px; border-radius:99px; font-size:15px; border:1px solid #ffb3cc;">C#</span>
+    <span style="background:#fff0f5; color:#cc4477; padding:6px 16px; border-radius:99px; font-size:15px; border:1px solid #ffb3cc;">Excel / Word</span>
+    <span style="background:#fff0f5; color:#cc4477; padding:6px 16px; border-radius:99px; font-size:15px; border:1px solid #ffb3cc;">Canva</span>
+    <span style="background:#fff0f5; color:#cc4477; padding:6px 16px; border-radius:99px; font-size:15px; border:1px solid #ffb3cc;">PowerPoint</span>
+  </div>
+
+  <!-- Kỹ năng mềm -->
+  <h3 style="color:#ff6b9a; font-size:15px; letter-spacing:0.08em; margin-bottom:12px;">KỸ NĂNG MỀM</h3>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:10px; margin-bottom:28px;">
+    <div style="background:white; border:1px solid #ffd6e0; border-radius:12px; padding:14px 16px; display:flex; align-items:flex-start; gap:10px;">
+      <span style="font-size:20px;">🤝</span>
+      <div><p style="margin:0 0 2px; font-size:15px; font-weight:bold;">Teamwork</p><p style="margin:0; font-size:15px; color:#999;">Làm việc nhóm hiệu quả</p></div>
+    </div>
+    <div style="background:white; border:1px solid #ffd6e0; border-radius:12px; padding:14px 16px; display:flex; align-items:flex-start; gap:10px;">
+      <span style="font-size:20px;">💬</span>
+      <div><p style="margin:0 0 2px; font-size:15px; font-weight:bold;">Giao tiếp</p><p style="margin:0; font-size:15px; color:#999;">Lắng nghe & trình bày rõ ràng</p></div>
+    </div>
+    <div style="background:white; border:1px solid #ffd6e0; border-radius:12px; padding:14px 16px; display:flex; align-items:flex-start; gap:10px;">
+      <span style="font-size:20px;">📚</span>
+      <div><p style="margin:0 0 2px; font-size:15px; font-weight:bold;">Tự học</p><p style="margin:0; font-size:15px; color:#999;">Chủ động tìm tòi, học hỏi</p></div>
+    </div>
+    <div style="background:white; border:1px solid #ffd6e0; border-radius:12px; padding:14px 16px; display:flex; align-items:flex-start; gap:10px;">
+      <span style="font-size:20px;">🧠</span>
+      <div><p style="margin:0 0 2px; font-size:15px; font-weight:bold;">Tư duy logic</p><p style="margin:0; font-size:15px; color:#999;">Phân tích & giải quyết vấn đề</p></div>
+    </div>
+  </div>
+
+  <!-- Dự án -->
+  <h3 style="color:#ff6b9a; font-size:15px; letter-spacing:0.08em; margin-bottom:12px;">DỰ ÁN ĐÃ THỰC HIỆN</h3>
+  <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:28px;">
+    <div style="background:white; border:1px solid #ffd6e0; border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
+      <div><p style="margin:0 0 3px; font-size:15px; font-weight:bold;">Website cá nhân (My Profile)</p><p style="margin:0; font-size:15px; color:#ff9ab5;"></p></div>
+      <span style="background:#eafbf1; color:#2e7d52; border:1px solid #a8e6c3; font-size:15px; padding:4px 12px; border-radius:99px; white-space:nowrap;">Hoàn thành</span>
+    </div>
+    <div style="background:white; border:1px solid #ffd6e0; border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
+      <div><p style="margin:0 0 3px; font-size:15px; font-weight:bold;">Hệ thống chăm sóc sức khỏe</p><p style="margin:0; font-size:15px; color:#ff9ab5;"></p></div>
+      <span style="background:#eafbf1; color:#2e7d52; border:1px solid #a8e6c3; font-size:15px; padding:4px 12px; border-radius:99px; white-space:nowrap;">Hoàn thành</span>
+    </div>
+    <div style="background:white; border:1px solid #ffd6e0; border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;">
+      <div><p style="margin:0 0 3px; font-size:15px; font-weight:bold;">Quản lý doanh nghiệp nhỏ</p><p style="margin:0; font-size:15px; color:#ff9ab5;"></p></div>
+      <span style="background:#fff8e1; color:#b07c00; border:1px solid #ffe082; font-size:15px; padding:4px 12px; border-radius:99px; white-space:nowrap;">Hoàn thành</span>
+    </div>
+  </div>
+
+  <!-- Ngoại ngữ -->
+  <h3 style="color:#ff6b9a; font-size:15px; letter-spacing:0.08em; margin-bottom:12px;">NGOẠI NGỮ</h3>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+    <div style="background:white; border:1px solid #ffd6e0; border-radius:12px; padding:14px; text-align:center;">
+      <p style="margin:0 0 4px; font-size:15px; font-weight:bold;">Tiếng Anh</p>
+      <p style="margin:0 0 8px; font-size:15px; color:#ff9ab5;">Trung cấp (B1)</p>
+      <div style="display:flex; justify-content:center; gap:4px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#ff6b9a; display:inline-block;"></span>
+        <span style="width:8px; height:8px; border-radius:50%; background:#ff6b9a; display:inline-block;"></span>
+        <span style="width:8px; height:8px; border-radius:50%; background:#ff6b9a; display:inline-block;"></span>
+        <span style="width:8px; height:8px; border-radius:50%; background:#ffd6e0; display:inline-block;"></span>
+        <span style="width:8px; height:8px; border-radius:50%; background:#ffd6e0; display:inline-block;"></span>
+      </div>
+    </div>
+    <div style="background:white; border:1px solid #ffd6e0; border-radius:12px; padding:14px; text-align:center;">
+      <p style="margin:0 0 4px; font-size:15px; font-weight:bold;">Tiếng Việt</p>
+      <p style="margin:0 0 8px; font-size:15px; color:#ff9ab5;">Bản ngữ</p>
+      <div style="display:flex; justify-content:center; gap:4px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#ff6b9a; display:inline-block;"></span>
+        <span style="width:8px; height:8px; border-radius:50%; background:#ff6b9a; display:inline-block;"></span>
+        <span style="width:8px; height:8px; border-radius:50%; background:#ff6b9a; display:inline-block;"></span>
+        <span style="width:8px; height:8px; border-radius:50%; background:#ff6b9a; display:inline-block;"></span>
+        <span style="width:8px; height:8px; border-radius:50%; background:#ff6b9a; display:inline-block;"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <h1>Học vấn</h1>
+
+  <div class="edu">
+    <h3>Đại học</h3>
+    <p>Trường: Học viện Tài chính</p>
+    <p>Ngành: Hệ thống thông tin quản lý</p>
+    <p>Khoa: Hệ thống thông tin Kinh tế </p>
+    <p>Thời gian: 2023 - nay</p>
+  </div>
+
+  <div class="edu">
+    <h3>THPT</h3>
+    <p>Trường: THPT Chuyên Nguyễn Trãi</p>
+    <p>Thời gian: 2020 - 2023</p>
+  </div>
+
+  <div class="edu">
+    <h3>Thành tích</h3>
+    <p>- Sinh viên giỏi các năm học</p>
+    <p>- Tham gia tích cực các hoạt động của trường, lớp</p>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <h1>Liên hệ</h1>
+  <p>Gmail: anhptn0801@gmail.com</p>
+  <p>SĐT: 0387452245</p>
+
+  <h3>Gửi tin nhắn</h3>
+  <input type="text" placeholder="Tên của bạn">
+  <input type="email" placeholder="Email">
+  <textarea rows="4" placeholder="Nội dung"></textarea>
+  <button class="btn">Gửi</button>
+</section>
+
+<footer>
+  <p>© 2026 - My Profile</p>
+</footer>
+
+<script>
+  function showPage(pageId) {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(sec => sec.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+  }
+
+  function changeBg() {
+    const colors = ['#fceef5', '#e0f7fa', '#fff1e6', '#e8f5e9', '#f3e5f5'];
+    const random = colors[Math.floor(Math.random() * colors.length)];
+    document.documentElement.style.setProperty('--bg-color', random);
+  }
+</script>
+
+</body>
+</html>
+
